@@ -9,14 +9,27 @@ class Static
 
   def call(env)
     req = Rack::Request.new(env)
-    res = Rack::Response.new
 
     if req.path =~ Regexp.new("^/public/*")
-      res.write(File.read(req.path[1..-1]))
-      res['Content-Type'] = 'MIME-Version: 1.0'
-      res.finish
+      serve_file(req)
     else
       app.call(env)
     end
+  end
+
+  private
+  def serve_file(req)
+    res = Rack::Response.new
+    res['Content-Type'] = 'MIME-Version: 1.0'
+
+    file_path = req.path[1..-1]
+    if File.exist?(file_path)
+      res.write(File.read(req.path[1..-1]))
+    else
+      res.status = "404"
+      res.write("File not found")
+    end
+
+    res.finish
   end
 end
