@@ -1,6 +1,5 @@
 require 'erb'
 require 'rack'
-require 'byebug'
 
 class ShowExceptions
   attr_reader :app
