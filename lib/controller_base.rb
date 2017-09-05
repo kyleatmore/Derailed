@@ -3,9 +3,10 @@ require 'active_support/core_ext'
 require 'erb'
 require_relative './session'
 require_relative './flash'
+require 'byebug'
 
 class ControllerBase
-  attr_reader :req, :res, :params
+  attr_reader :req, :res, :params, :protect_from_forgery, :auth_token
 
   def initialize(req, res, route_params = {})
     @req = req
@@ -51,7 +52,32 @@ class ControllerBase
   end
 
   def invoke_action(name)
+    if protect_from_forgery? && req.request_method != 'GET'
+      check_authenticity_token
+    end
+
     self.send(name)
     render(name) unless already_built_response?
+  end
+
+  def self.protect_from_forgery
+    @@protect_from_forgery = true
+  end
+
+  def protect_from_forgery?
+    @@protect_from_forgery
+  end
+
+  def form_authenticity_token
+    @auth_token ||= SecureRandom.urlsafe_base64(16)
+    res.set_cookie('authenticity_token', value: auth_token, path: '/')
+    auth_token
+  end
+
+  def check_authenticity_token
+    auth_cookie = req.cookies['authenticity_token']
+    unless auth_cookie && auth_cookie == form_authenticity_token
+      raise "Invalid authenticity token"
+    end
   end
 end
