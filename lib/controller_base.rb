@@ -2,6 +2,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'erb'
 require_relative './session'
+require_relative './flash'
 
 class ControllerBase
   attr_reader :req, :res, :params
@@ -22,6 +23,7 @@ class ControllerBase
     res.status = 302
     @already_built_response = true
     session.store_session(res)
+    flash.store_flash(res)
   end
 
   def render_content(content, content_type)
@@ -30,6 +32,7 @@ class ControllerBase
     res.write(content)
     @already_built_response = true
     session.store_session(res)
+    flash.store_flash(res)
   end
 
   def render(template_name)
