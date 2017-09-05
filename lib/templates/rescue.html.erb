@@ -1,4 +1,4 @@
-<h1><%= @error.exception %></h1>
+<h1><%= @error.to_s %></h1>
 
 <ul>
   <% @error.backtrace.each do |file| %>

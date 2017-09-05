@@ -3,13 +3,15 @@ require 'rack'
 require 'byebug'
 
 class ShowExceptions
+  attr_reader :app
+
   def initialize(app)
     @app = app
   end
 
   def call(env)
     begin
-      @app.call(env)
+      app.call(env)
     rescue => e
       render_exception(e)
     end
