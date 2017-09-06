@@ -1,0 +1,19 @@
+<h1>Add A Train!</h1>
+
+<p><%= flash[:errors].join("<br>") if flash[:errors] %><p>
+
+<form action="/trains" method="post">
+  <label>Origin
+    <input type="text" name="train[origin]" value="<%= @train.origin %>">
+  </label>
+
+  <label>Destination
+    <input type="text" name="train[destination]" value="<%= @train.destination %>">
+  </label>
+
+  <label>Number of Passengers
+    <input type="text" name="train[num_passengers]" value="<%= @train.num_passengers %>">
+  </label>
+
+  <input type="submit" value="Add Train">
+</form>

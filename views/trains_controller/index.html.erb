@@ -1,0 +1,23 @@
+<h1>Train Departures</h1>
+
+<p><%= flash[:notice] if flash[:notice] %></p>
+
+<table>
+  <tbody>
+    <tr>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Number of Passengers</th>
+    </tr>
+
+    <% @trains.each do |train| %>
+      <tr>
+        <td><%= train.origin %></td>
+        <td><%= train.destination %></td>
+        <td><%= train.num_passengers %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<a href="/trains/new">Add Train</a>

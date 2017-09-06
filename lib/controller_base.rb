@@ -11,6 +11,7 @@ class ControllerBase
     @req = req
     @res = res
     @params = req.params.merge(route_params)
+    @@protect_from_forgery ||= false
   end
 
   def already_built_response?

@@ -1,6 +1,7 @@
 require 'rack'
-require_relative '/lib/controller_base.rb'
-require_relative '/lib/controller_base.rb'
+require_relative './lib/controller_base'
+require_relative './lib/router'
+require 'byebug'
 
 class Train
   attr_reader :origin, :destination, :num_passengers
@@ -10,9 +11,9 @@ class Train
   end
 
   def initialize(params = {})
-    @origin = params[:origin]
-    @destination = params[:destination]
-    @num_passengers = params[:num_passengers]
+    @origin = params["origin"]
+    @destination = params["destination"]
+    @num_passengers = params["num_passengers"]
   end
 
   def errors
@@ -20,10 +21,10 @@ class Train
   end
 
   def valid?
-    errors << "Origin can't be blank" if @origin.nil?
-    errors << "Destination can't be blank" if @destination.nil?
-    errors << "Number of passengers can't be blank" if @num_passengers.nil?
-
+    errors << "Origin can't be blank" unless @origin.present?
+    errors << "Destination can't be blank" unless @destination.present?
+    errors << "Number of passengers can't be blank" unless @num_passengers.present?
+    debugger
     errors.empty?
   end
 
@@ -37,11 +38,12 @@ end
 
 class TrainsController < ControllerBase
   def new
+    @train = Train.new
     render :new
   end
 
   def create
-    @train = Train.new(params[:train])
+    @train = Train.new(params["train"])
 
     if @train.save
       flash[:notice] = "New Train Added!"
@@ -60,9 +62,9 @@ end
 
 router = Router.new
 router.draw do
-  get Regexp.new("^trains/new$"), TrainsController, :new
-  post Regexp.new("^trains$"), TrainsController, :create
-  get Regexp.new("^trains$"), TrainsController, :index
+  get Regexp.new("^/trains/new$"), TrainsController, :new
+  post Regexp.new("^/trains$"), TrainsController, :create
+  get Regexp.new("^/trains$"), TrainsController, :index
 end
 
 app = Proc.new do |env|
