@@ -63,6 +63,7 @@ router = Router.new
 router.draw do
   get Regexp.new("^/trains/new$"), TrainsController, :new
   post Regexp.new("^/trains$"), TrainsController, :create
+  get Regexp.new("^/$"), TrainsController, :index
   get Regexp.new("^/trains$"), TrainsController, :index
 end
 

@@ -1,23 +1,89 @@
-<h1>Train Departures</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Derailed Demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+      header {
+        background-color: #5E9AED;
+        color: white;
+        padding: 10px;
+      }
+      .flash {
+        color: red;
+        font-weight: bold;
+      }
+      table {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 20px;
+        border: 2px solid #5E9AED;
+        min-height: 100px;
+        border-collapse: collapse;
+      }
 
-<p><%= flash[:notice] if flash[:notice] %></p>
+      .headers {
+        background-color: #5E9AED;
+        color: white;
+      }
 
-<table>
-  <tbody>
-    <tr>
-      <th>Origin</th>
-      <th>Destination</th>
-      <th>Number of Passengers</th>
-    </tr>
+      th, td {
+        text-align: left;
+        padding: 10px;
+        max-width: 200px;
+      }
 
-    <% @trains.each do |train| %>
-      <tr>
-        <td><%= train.origin %></td>
-        <td><%= train.destination %></td>
-        <td><%= train.num_passengers %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      th {
+        font-size: 20px;
+        font-weight: normal;
+      }
 
-<a href="/trains/new">Add Train</a>
+      tr:nth-child(even) {
+        background-color: #EFF5FD;
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .add-train {
+        background-color: #5E9AED;
+        padding: 10px;
+        border: 2px solid lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/trains"><h1>Train Departures</h1></a>
+    </header>
+
+    <p class="flash"><%= flash[:notice] if flash[:notice] %></p>
+    <a href="/trains/new" class="add-train">Add Train</a>
+
+    <table>
+      <tbody>
+        <tr class="headers">
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Passengers</th>
+        </tr>
+
+        <% @trains.each do |train| %>
+          <tr>
+            <td><%= train.origin %></td>
+            <td><%= train.destination %></td>
+            <td><%= train.num_passengers %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </body>
+</html>

@@ -1,19 +1,98 @@
-<h1>Add A Train!</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Derailed Demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+      header {
+        background-color: #5E9AED;
+        color: white;
+        padding: 10px;
+      }
+      .flash {
+        color: red;
+        font-weight: bold;
+      }
 
-<p><%= flash[:errors].join("<br>") if flash[:errors] %><p>
+      a {
+        text-decoration: none;
+        color: white;
+      }
 
-<form action="/trains" method="post">
-  <label>Origin
-    <input type="text" name="train[origin]" value="<%= @train.origin %>">
-  </label>
+      .add-container {
+        width: 300px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid lightgray;
+      }
 
-  <label>Destination
-    <input type="text" name="train[destination]" value="<%= @train.destination %>">
-  </label>
+      ul {
+        list-style: none;
+        padding: 0;
+      }
 
-  <label>Number of Passengers
-    <input type="text" name="train[num_passengers]" value="<%= @train.num_passengers %>">
-  </label>
+      li {
+        margin: 5px 0;
+      }
 
-  <input type="submit" value="Add Train">
-</form>
+      label {
+        width: 110px;
+        text-align: right;
+        display: inline-block;
+      }
+      .submit {
+        background-color: #5E9AED;
+        padding: 10px;
+        margin-top: 10px;
+        border: 2px solid lightgray;
+        color: white;
+        font-size: inherit;
+      }
+
+      input {
+        font-size: 12px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/trains"><h1>Train Departures</h1></a>
+    </header>
+
+    <p class="flash"><%= flash[:errors].join("<br>") if flash[:errors] %><p>
+
+    <div class="add-container">
+      <h2>Add A New Train</h2>
+
+      <form action="/trains" method="post">
+        <ul class="input-fields">
+          <li>
+            <label>Origin:</label>
+            <input type="text" name="train[origin]" value="<%= @train.origin %>">
+          </li>
+
+          <li>
+            <label>Destination:</label>
+            <input type="text" name="train[destination]" value="<%= @train.destination %>">
+          </li>
+
+          <li>
+            <label># Passengers:</label>
+              <input type="number" name="train[num_passengers]" value="<%= @train.num_passengers %>">
+          </li>
+
+          <li>
+            <input type="submit" value="Add Train" class="submit">
+          </li>
+        </ul>
+      </form>
+    </div>
+  </body>
+</html>
