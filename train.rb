@@ -1,7 +1,6 @@
 require 'rack'
 require_relative './lib/controller_base'
 require_relative './lib/router'
-require 'byebug'
 
 class Train
   attr_reader :origin, :destination, :num_passengers
@@ -24,7 +23,6 @@ class Train
     errors << "Origin can't be blank" unless @origin.present?
     errors << "Destination can't be blank" unless @destination.present?
     errors << "Number of passengers can't be blank" unless @num_passengers.present?
-    debugger
     errors.empty?
   end
 
