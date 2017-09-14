@@ -33,4 +33,4 @@ end
 1. git clone https://github.com/kyleatmore/Derailed
 2. bundle install
 3. bundle exec ruby train.rb
-4. Visit http://localhost:3000/trains
+4. Visit http://localhost:3000/
